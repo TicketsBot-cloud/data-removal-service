@@ -6,7 +6,7 @@ require (
 	github.com/caarlos0/env/v6 v6.10.1
 	github.com/jackc/pgtype v1.3.0
 	github.com/jackc/pgx/v4 v4.6.0
-	github.com/rxdn/gdl v0.0.0-20230716155050-01e2bd203295
+	github.com/rxdn/gdl v0.0.0-20230716201318-bd66d6307f3b
 	go.uber.org/zap v1.10.0
 )
 
