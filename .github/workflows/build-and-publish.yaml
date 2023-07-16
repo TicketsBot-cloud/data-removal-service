@@ -2,8 +2,8 @@ name: Build and Publish
 
 env:
   REGISTRY: ghcr.io
-  PACKAGE_NAME: worker
-  GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+  PACKAGE_NAME: data-removal-service
+  GITHUB_REPOSITORY: ${{ github.repository }}
   GITHUB_SHA: ${{ github.sha }}
 
 on:
@@ -30,7 +30,7 @@ jobs:
 
       - name: Set image name
         run: |
-          echo "IMAGE_NAME=${REGISTRY}/${GITHUB_REPOSITORY_OWNER,,}/${PACKAGE_NAME,,}:${GITHUB_SHA}" >> ${GITHUB_ENV}
+          echo "IMAGE_NAME=${REGISTRY}/${GITHUB_REPOSITORY,,}:${GITHUB_SHA}" >> ${GITHUB_ENV}
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
