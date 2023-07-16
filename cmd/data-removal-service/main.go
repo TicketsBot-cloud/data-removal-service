@@ -11,17 +11,26 @@ func main() {
 	config := config.ParseConfig()
 
 	var logger *zap.Logger
+	var err error
 	if config.ProductionMode {
-		logger, _ = zap.NewProduction()
+		logger, err = zap.NewProduction(zap.AddCaller(), zap.AddStacktrace(zap.ErrorLevel))
 	} else {
-		logger, _ = zap.NewDevelopment()
+		logger, err = zap.NewDevelopment(zap.AddCaller(), zap.AddStacktrace(zap.ErrorLevel))
 	}
+
+	if err != nil {
+		panic(err)
+	}
+
+	logger.Info("Connecting to cache...")
 
 	pgCache, err := cache.ConnectPostgres(config)
 	if err != nil {
 		logger.Fatal("Failed to connect to postgres", zap.Error(err))
 		panic(err)
 	}
+
+	logger.Info("Connected to cache!")
 
 	cacheExecutor := cache.NewPostgresExecutor(config, logger, pgCache)
 
