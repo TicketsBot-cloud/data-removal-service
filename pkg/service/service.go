@@ -1,8 +1,8 @@
-package data_removal_service
+package service
 
 import (
-	"github.com/TicketsBot/data-removal-service/cache"
 	"github.com/TicketsBot/data-removal-service/config"
+	"github.com/TicketsBot/data-removal-service/internal/cache"
 	"go.uber.org/zap"
 	"time"
 )

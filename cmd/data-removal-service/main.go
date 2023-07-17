@@ -1,9 +1,9 @@
 package main
 
 import (
-	dataremovalservice "github.com/TicketsBot/data-removal-service"
-	"github.com/TicketsBot/data-removal-service/cache"
 	"github.com/TicketsBot/data-removal-service/config"
+	"github.com/TicketsBot/data-removal-service/internal/cache"
+	"github.com/TicketsBot/data-removal-service/pkg/service"
 	"go.uber.org/zap"
 )
 
@@ -22,6 +22,8 @@ func main() {
 		panic(err)
 	}
 
+	defer logger.Sync()
+
 	logger.Info("Connecting to cache...")
 
 	pgCache, err := cache.ConnectPostgres(config)
@@ -34,5 +36,5 @@ func main() {
 
 	cacheExecutor := cache.NewPostgresExecutor(config, logger, pgCache)
 
-	dataremovalservice.NewService(config, logger, cacheExecutor).Run()
+	service.NewService(config, logger, cacheExecutor).Run()
 }
