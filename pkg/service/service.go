@@ -3,21 +3,29 @@ package service
 import (
 	"github.com/TicketsBot/data-removal-service/config"
 	"github.com/TicketsBot/data-removal-service/internal/cache"
+	"github.com/TicketsBot/data-removal-service/internal/database"
 	"go.uber.org/zap"
 	"time"
 )
 
 type Service struct {
-	config        config.Config
-	logger        *zap.Logger
-	CacheExecutor cache.CacheExecutor
+	config           config.Config
+	logger           *zap.Logger
+	CacheExecutor    cache.CacheExecutor
+	DatabaseExecutor database.DatabaseExecutor
 }
 
-func NewService(config config.Config, logger *zap.Logger, cacheExecutor cache.CacheExecutor) *Service {
+func NewService(
+	config config.Config,
+	logger *zap.Logger,
+	cacheExecutor cache.CacheExecutor,
+	dbExecutor database.DatabaseExecutor,
+) *Service {
 	return &Service{
-		config:        config,
-		logger:        logger,
-		CacheExecutor: cacheExecutor,
+		config:           config,
+		logger:           logger,
+		CacheExecutor:    cacheExecutor,
+		DatabaseExecutor: dbExecutor,
 	}
 }
 
@@ -55,6 +63,10 @@ func (s *Service) doPurge() error {
 	}
 
 	if err := s.CacheExecutor.PurgeMembers(purgeThreshold); err != nil {
+		return err
+	}
+
+	if err := s.DatabaseExecutor.Purge(purgeThreshold); err != nil {
 		return err
 	}
 

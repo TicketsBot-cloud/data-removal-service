@@ -12,6 +12,7 @@ type Config struct {
 	DaemonExecutionFrequency time.Duration `env:"DAEMON_EXECUTION_FREQUENCY" envDefault:"1h"`
 
 	CacheUri     string        `env:"CACHE_URI,notEmpty"`
+	DatabaseUri  string        `env:"DATABASE_URI,notEmpty"`
 	QueryTimeout time.Duration `env:"QUERY_TIMEOUT" envDefault:"10m"`
 
 	PurgeThresholdDays int `env:"PURGE_THRESHOLD_DAYS,required,notEmpty"`
