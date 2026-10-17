@@ -15,7 +15,7 @@ type Config struct {
 	DatabaseUri  string        `env:"DATABASE_URI,notEmpty"`
 	QueryTimeout time.Duration `env:"QUERY_TIMEOUT" envDefault:"10m"`
 
-	PurgeThresholdDays int `env:"PURGE_THRESHOLD_DAYS,required,notEmpty"`
+	PurgeThresholdDays int `env:"PURGE_THRESHOLD_DAYS" envDefault:"30"`
 }
 
 func ParseConfig() (conf Config) {
